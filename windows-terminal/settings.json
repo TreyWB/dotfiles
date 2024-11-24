@@ -1,0 +1,125 @@
+{
+    "profiles": {
+        "defaults": {},
+        "list": [
+            {
+                "bellStyle": "none",
+                "colorScheme": "HTB Dark-Blue",
+                "commandline": "C:\\Windows\\system32\\wsl.exe -d kali-linux -e zsh",
+                "cursorShape": "filledBox",
+                "font": {
+                    "face": "FiraCode Nerd Font Mono"
+                },
+                "guid": "{46ca431a-3a87-5fb3-83cd-11ececc031d2}",
+                "hidden": false,
+                "icon": "C:\\Users\\treyb\\Pictures\\Icons\\distributor-logo-kali-linux-icon-2048x2005-dki611fk.png",
+                "name": "Kali",
+                "scrollbarState": "hidden",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "colorScheme": "Catppuccin Macchiato",
+                "font": {
+                    "face": "FiraCode Nerd Font Mono",
+                    "size": 12
+                },
+                "guid": "{d8e96812-b789-5068-a5ae-10b2fb53e95f}",
+                "hidden": false,
+                "name": "Ubuntu 24.04.1 LTS",
+                "padding": "0",
+                "scrollbarState": "hidden",
+                "source": "CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc"
+            }
+        ]
+    },
+    "schemes": [
+        {
+            "background": "#141D2B",
+            "black": "#F3F3F3",
+            "blue": "#2E6CFF",
+            "brightBlack": "#F3F3F3",
+            "brightBlue": "#5CB2FF",
+            "brightCyan": "#5CECC6",
+            "brightGreen": "#C5F467",
+            "brightPurple": "#CE8DFB",
+            "brightRed": "#FF8484",
+            "brightWhite": "#EEEEEC",
+            "brightYellow": "#FFCC5C",
+            "cursorColor": "#A4B1CD",
+            "cyan": "#2EE7B6",
+            "foreground": "#A4B1CD",
+            "green": "#9FEF00",
+            "name": "HTB Dark-Blue",
+            "purple": "#9E00FF",
+            "red": "#FF3E3E",
+            "selectionBackground": "#A4B1CD",
+            "white": "#EEEEEC",
+            "yellow": "#FFAF00"
+        },
+        {
+            "background": "#24273A",
+            "black": "#494D64",
+            "blue": "#8AADF4",
+            "brightBlack": "#5B6078",
+            "brightBlue": "#8AADF4",
+            "brightCyan": "#8BD5CA",
+            "brightGreen": "#A6DA95",
+            "brightPurple": "#F5BDE6",
+            "brightRed": "#ED8796",
+            "brightWhite": "#A5ADCB",
+            "brightYellow": "#EED49F",
+            "cursorColor": "#F4DBD6",
+            "cyan": "#8BD5CA",
+            "foreground": "#CAD3F5",
+            "green": "#A6DA95",
+            "name": "Catppuccin Macchiato",
+            "purple": "#F5BDE6",
+            "red": "#ED8796",
+            "selectionBackground": "#5B6078",
+            "white": "#B8C0E0",
+            "yellow": "#EED49F"
+        }
+    ],
+    "themes": [
+        {
+            "name": "HTB Dark-Blue",
+            "tab": {
+                "background": "#141D2BFF",
+                "iconStyle": "default",
+                "showCloseButton": "always",
+                "unfocusedBackground": "#0F151FFF"
+            },
+            "tabRow": {
+                "background": "#141D2BFF",
+                "unfocusedBackground": "#0F151FFF"
+            },
+            "window": {
+                "applicationTheme": "dark",
+                "experimental.rainbowFrame": false,
+                "frame": null,
+                "unfocusedFrame": null,
+                "useMica": false
+            }
+        },
+        {
+            "name": "Catppuccin Macchiato",
+            "tab": {
+                "background": "#24273AFF",
+                "iconStyle": "default",
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "tabRow": {
+                "background": "#1E2030FF",
+                "unfocusedBackground": "#181926FF"
+            },
+            "window": {
+                "applicationTheme": "dark",
+                "experimental.rainbowFrame": false,
+                "frame": null,
+                "unfocusedFrame": null,
+                "useMica": false
+            }
+        }
+    ]
+}
