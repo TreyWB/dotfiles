@@ -1,8 +1,8 @@
 # Dotfiles
 
-## Kali Instructions
+### Kali Instructions
 
-### Tmux
+\- Tmux -
 1. Install tmux
 2. Clone tpm
 ``` git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm ```
