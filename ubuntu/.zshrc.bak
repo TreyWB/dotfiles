@@ -108,11 +108,20 @@ unsetopt NOMATCH
 
 # ALIASES
 
-# Create "Windows" path alias
+# Windows path alias
 alias win="cd /mnt/c/Users/treyb"
 
 # Map "python" to "python3"
 alias python="python3"
+
+# Obsidian Vault repo path alias
+alias obs="cd /mnt/c/Users/treyb/Documents/Obsidian-Vault"
+
+# Alias "vim" to "nvim"
+alias vim="/usr/bin/nvim"
+
+# Alias "vi" to "vim"
+alias vi="/usr/bin/vim"
 
 # PATHS
 
@@ -122,11 +131,6 @@ export PATH=$PATH:/home/trey/.local/bin
 # Go
 export PATH=$PATH:/usr/local/go/bin
 
-
-
-# Enable Oh-My-Posh Prompt
-eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/main.toml)"
-
 # fnm
 FNM_PATH="/home/trey/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
@@ -135,3 +139,26 @@ if [ -d "$FNM_PATH" ]; then
 fi
 
 export PATH=~/bin:$PATH
+
+# Alias to save state of tmux session-server
+alias 'tmux-save'="tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/save.sh"
+
+# Start tmux server and restore sessions if not running
+if ! tmux has-session 2>/dev/null; then
+    # Create a flag file to indicate this is the initial startup
+    touch /tmp/tmux_startup_restore
+
+    # Start server and create a temporary session to trigger restore
+    tmux new-session -d
+    sleep 1
+
+    # Only try to kill session 0 if it exists
+    tmux has-session -t 0 2>/dev/null && tmux kill-session -t 0
+
+    # Remove the flag file after restore is complete
+    rm /tmp/tmux_startup_restore
+fi
+
+# Enable Oh-My-Posh Prompt
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/main.toml)"
+
