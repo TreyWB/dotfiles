@@ -1,0 +1,12 @@
+general.import = ["~/.config/alacritty/catppuccin-macchiato.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+option_as_alt = "Both"
+
+[font]
+normal.family = "FiraMono Nerd Font Mono"
+
+size = 18
