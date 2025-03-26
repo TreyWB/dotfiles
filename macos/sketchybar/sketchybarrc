@@ -1,0 +1,108 @@
+#!/bin/bash
+
+source "$CONFIG_DIR/colors.sh"
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+# -- Bar Appearance -- #
+
+sketchybar --bar position=top height=24 blur_radius=60 color=$BAR_COLOR padding_left=10 padding_right=10
+
+default=(
+  icon.font="Hack Nerd Font:Bold:15.0"
+  label.font="Hack Nerd Font:Bold:14.0"
+  icon.color=$TEXT_COLOR
+  label.color=$TEXT_COLOR
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+  icon.y_offset=1
+)
+sketchybar --default "${default[@]}"
+
+
+# -- Right Side Items -- #
+sketchybar --add item calendar right \
+           --set calendar background.color=$ITEM_BG_COLOR \
+           --set calendar background.corner_radius=5 \
+           --set calendar background.height=18 \
+           --set calendar background.padding_left=0 \
+           --set calendar background.padding_right=0 \
+           --set calendar label.padding_right=10 \
+           --set calendar icon.padding_left=2 \
+	   --set calendar update_freq=30 \
+	   --set calendar script="$PLUGIN_DIR/calendar.sh"
+
+sketchybar --add item volume right \
+           --set volume script="$PLUGIN_DIR/volume.sh" \
+           --set volume icon.padding_right=5 \
+           --set volume background.color=$ITEM_BG_COLOR \
+           --set volume background.corner_radius=5 \
+           --set volume background.height=18 \
+           --set volume background.padding_left=0 \
+           --set volume background.padding_right=10 \
+           --set volume label.padding_right=10 \
+           --set volume icon.padding_left=8 \
+           --subscribe volume volume_change \
+
+sketchybar --add item battery right \
+	   --set battery update_freq=120 \
+	   --set battery script="$PLUGIN_DIR/battery.sh" \
+	   --subscribe battery sytem_woke power_source_change \
+           --set battery icon.padding_right=5 \
+           --set battery background.color=$ITEM_BG_COLOR \
+           --set battery background.corner_radius=5 \
+           --set battery background.height=18 \
+           --set battery background.padding_left=0 \
+           --set battery background.padding_right=10 \
+           --set battery label.padding_right=10 \
+           --set battery icon.padding_left=8 \
+
+sketchybar --add item cpu right \
+           --set cpu update_freq=2 \
+           --set cpu icon="􀧓" \
+           --set cpu script="$PLUGIN_DIR/cpu.sh" \
+           --set cpu background.color=$ITEM_BG_COLOR \
+           --set cpu background.corner_radius=5 \
+           --set cpu background.height=18 \
+           --set cpu background.padding_left=0 \
+           --set cpu background.padding_right=10 \
+           --set cpu label.padding_right=10 \
+           --set cpu icon.padding_left=8 \
+           --set cpu icon.padding_right=5
+
+
+# -- Left Icons -- #
+SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+for i in "${!SPACE_ICONS[@]}"
+do
+  sid="$(($i+1))"
+  space=(
+    space="$sid"
+    icon="${SPACE_ICONS[i]}"
+    icon.padding_left=6
+    icon.padding_right=7
+    background.color=0x40ffffff
+    background.corner_radius=5
+    background.height=18
+    background.padding_right=10
+    label.drawing=off
+    script="$PLUGIN_DIR/space.sh"
+    click_script="yabai -m space --focus $sid"
+  )
+  sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
+done
+
+
+# -- Middle Items -- #
+sketchybar --add item focused_app center \
+           --set focused_app script="$PLUGIN_DIR/app.sh" \
+           --set focused_app label.padding_right=0 \
+           --set focused_app label.padding_left=0 \
+           --subscribe focused_app front_app_switched
+
+
+# -- Draw Bar -- #
+## NEVER DELETE ##
+sketchybar --update

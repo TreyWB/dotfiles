@@ -1,0 +1,70 @@
+#######################
+#   Start/Stop Services
+#######################
+
+ctrl + alt - q : yabai --stop-service
+ctrl + alt - s : yabai --start-service
+ctrl + alt - y : yabai --restart-service; skhd --restart-service
+ctrl + alt - b : sketchybar --reload
+
+###########################
+#   Opening Applications
+###########################
+
+cmd - return : open -na Alacritty
+cmd - e : open -na Zen
+
+############################
+#   Changing Window Focus 
+############################
+
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - h : yabai -m window --focus west
+alt - l : yabai -m window --focus east
+
+############################ 
+#   Modify Current Layout
+############################ 
+
+# Rotate Layout
+shift + alt -r : yabai -m space --rotate 270
+
+# Flip on Y-Axis
+shift + alt - y : yabai -m space --mirror y-axis
+
+# Flip on X-Axis
+shift + alt - x : yabai -m space --mirror x-axis
+
+# Toggle Window Float
+shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+
+#########################
+#   Modify Window Size
+#########################
+
+# Maximize Window
+shift + alt -m : yabai -m window --toggle zoom-fullscreen 
+
+# Rebalance Window Sizes
+shift + alt -e : yabai -m space --balance
+
+#####################
+#   Moving Windows
+#####################
+
+# Swap Windows
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - h : yabai -m window --swap west
+shift + alt - l : yabai -m window --swap east
+
+# Move Window to Other Workspace
+ctrl + alt - h : yabai -m window --space prev;
+ctrl + alt - l : yabai -m window --space next;
+
+ctrl + alt - 1 : yabai -m window --space 1;
+ctrl + alt - 2 : yabai -m window --space 2;
+ctrl + alt - 3 : yabai -m window --space 3;
+
+
