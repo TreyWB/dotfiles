@@ -2,9 +2,9 @@
 function set_prompt() {
     if [ -n "$WSL_DISTRO_NAME" ]; then
         prompt_symbol="@wsl"
-        PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ [ε┤¢]}%f\n%F{%(#.blue.green)}ΓööΓöÇ%B%(#.%F{red}#.%F{blue}$)%b%F '
+        PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F '
     else
-        PROMPT='${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ [ε┤¢]}%(#.%F{blue}$)%f '
+        PROMPT='${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ []}%(#.%F{blue}$)%f '
     fi
 }
 
@@ -19,7 +19,7 @@ add-zsh-hook precmd set_prompt
 
 setopt autocd              # change directory just by typing its name
 setopt interactivecomments # allow comments in interactive mode
-setopt magicequalsubst     # enable filename expansion for arguments of the form ΓÇÿanything=expressionΓÇÖ
+setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
 setopt nonomatch           # hide error message if there is no match for the pattern
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
@@ -106,21 +106,21 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
-    prompt_symbol=≡ƒÉº
+    prompt_symbol=🐧
     # Skull emoji for root terminal
-    #[ "$EUID" -eq 0 ] && prompt_symbol=≡ƒÆÇ
+    #[ "$EUID" -eq 0 ] && prompt_symbol=💀
     case "$PROMPT_ALTERNATIVE" in
         twoline)
-            PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ${debian_chroot:+($debian_chroot)ΓöÇ}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))ΓöÇ}${PIPENV_ACTIVE:+(pipenv)ΓöÇ}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/ΓÇª/%4~.%5~)%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ [ε┤¢]}\nΓööΓöÇ%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+            PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}${PIPENV_ACTIVE:+(pipenv)─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
             # Right-side prompt with exit codes and background processes
-            #RPROMPT=$'%(?.. %? %F{red}%BΓ£ù%b%F{reset})%(1j. %j %F{yellow}%BΓÜÖ%b%F{reset}.)'
+            #RPROMPT=$'%(?.. %? %F{red}%B✗%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
         oneline)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ [ε┤¢]}%(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ []}%(#.#.$) '
             RPROMPT=
             ;;
         backtrack)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}${PIPENV_ACTIVE:+ [ε┤¢]}%(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}${PIPENV_ACTIVE:+ []}%(#.#.$) '
             RPROMPT=
             ;;
     esac
@@ -299,12 +299,12 @@ export XDG_RUNTIME_DIR=/run/user/1000
 
 ## Run if kex server breaks
 kex-fix() {
-    echo "≡ƒ¢æ Stopping any running KEX sessions..."
+    echo "🛑 Stopping any running KEX sessions..."
     kex stop
-    echo "≡ƒöº Running KEX environment fixes..."
+    echo "🔧 Running KEX environment fixes..."
     bash ~/.kex-setup.sh
-    echo "Γ£à Environment setup complete"
-    echo "≡ƒÜÇ Starting KEX..."
+    echo "✅ Environment setup complete"
+    echo "🚀 Starting KEX..."
     kex --win -s
 }
 

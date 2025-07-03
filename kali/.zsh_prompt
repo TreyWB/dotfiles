@@ -2,16 +2,15 @@
 set_prompt() {
     if [ -n "$WSL_DISTRO_NAME" ]; then
         if [ "$WSL_DISTRO_NAME" = "kali-linux" ]; then
-            PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ(%B%F{%(#.red.blue)}%n@kali%b%F{%(#.blue.green)})%f-[%B%F{reset}%~%b%F{%(#.blue.green)}]\n%F{%(#.blue.green)}ΓööΓöÇ%b%F{%(#.red.blue)}$%f '
+            PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n@kali%b%F{%(#.blue.green)})%f-[%B%F{reset}%~%b%F{%(#.blue.green)}]\n%F{%(#.blue.green)}└─%b%F{%(#.red.blue)}$%f '
         else
-            PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ(%B%F{%(#.red.blue)}%n@wsl%b%F{%(#.blue.green)})%f-[%B%F{reset}%~%b%F{%(#.blue.green)}]\n%F{%(#.blue.green)}ΓööΓöÇ%b%F{%(#.red.blue)}$%f '
+            PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n@wsl%b%F{%(#.blue.green)})%f-[%B%F{reset}%~%b%F{%(#.blue.green)}]\n%F{%(#.blue.green)}└─%b%F{%(#.red.blue)}$%f '
         fi
     else
-        PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ(%B%F{%(#.red.blue)}%nπë┐DESKTOP-OA2JMFN%b%F{%(#.blue.green)})%f-[%B%F{reset}%~%b%F{%(#.blue.green)}]\n%F{%(#.blue.green)}ΓööΓöÇ%b%F{%(#.red.blue)}$%f '
+        PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n㉿DESKTOP-OA2JMFN%b%F{%(#.blue.green)})%f-[%B%F{reset}%~%b%F{%(#.blue.green)}]\n%F{%(#.blue.green)}└─%b%F{%(#.red.blue)}$%f '
     fi
 }
 
 # Call the set_prompt function when the prompt is displayed
 autoload -U add-zsh-hook
 add-zsh-hook precmd set_prompt
-
