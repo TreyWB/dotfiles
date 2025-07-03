@@ -101,6 +101,17 @@ if ! tmux has-session 2>/dev/null; then
     rm /tmp/tmux_startup_restore
 fi
 
+# Custom function to add pipenv indicator
+add_pipenv_indicator() {
+    if [[ -n "$PIPENV_ACTIVE" ]]; then
+        # This will be called after each command to modify the prompt
+        PROMPT="${PROMPT% } - & "
+    fi
+}
+
+# Hook the function to run before each prompt
+autoload -U add-zsh-hook
+add-zsh-hook precmd add_pipenv_indicator
+
 # Enable Oh-My-Posh Prompt
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/main.toml)"
-

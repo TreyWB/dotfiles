@@ -1,16 +1,10 @@
-# ~/.zshrc file for zsh interactive shells.
-# see /usr/share/doc/zsh/examples/zshrc for examples
-
-
-
-
 # Change prompt to (trey@wsl) when in WSL:
 function set_prompt() {
     if [ -n "$WSL_DISTRO_NAME" ]; then
         prompt_symbol="@wsl"
-        PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]%f\n%F{%(#.blue.green)}ΓööΓöÇ%B%(#.%F{red}#.%F{blue}$)%b%F '
+        PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ [ε┤¢]}%f\n%F{%(#.blue.green)}ΓööΓöÇ%B%(#.%F{red}#.%F{blue}$)%b%F '
     else
-        PROMPT='${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.%F{blue}$)%f '
+        PROMPT='${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ [ε┤¢]}%(#.%F{blue}$)%f '
     fi
 }
 
@@ -18,11 +12,12 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd set_prompt
 
 
-
+# ====================================
+# START OF DEFAULT KALI CONFIGURATIONS
+# ====================================
 
 
 setopt autocd              # change directory just by typing its name
-#setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
 setopt magicequalsubst     # enable filename expansion for arguments of the form ΓÇÿanything=expressionΓÇÖ
 setopt nonomatch           # hide error message if there is no match for the pattern
@@ -74,7 +69,6 @@ setopt hist_expire_dups_first # delete duplicates first when HISTFILE size excee
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
-#setopt share_history         # share command history data
 
 # force zsh to show the complete history
 alias history="history 0"
@@ -112,21 +106,21 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
-    prompt_symbol=πë┐
+    prompt_symbol=≡ƒÉº
     # Skull emoji for root terminal
     #[ "$EUID" -eq 0 ] && prompt_symbol=≡ƒÆÇ
     case "$PROMPT_ALTERNATIVE" in
         twoline)
-            PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ${debian_chroot:+($debian_chroot)ΓöÇ}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))ΓöÇ}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/ΓÇª/%4~.%5~)%b%F{%(#.blue.green)}]\nΓööΓöÇ%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+            PROMPT=$'%F{%(#.blue.green)}ΓöîΓöÇΓöÇ${debian_chroot:+($debian_chroot)ΓöÇ}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))ΓöÇ}${PIPENV_ACTIVE:+(pipenv)ΓöÇ}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/ΓÇª/%4~.%5~)%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ [ε┤¢]}\nΓööΓöÇ%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
             # Right-side prompt with exit codes and background processes
-            #RPROMPT=$'%(?.. %? %F{red}%BΓ¿»%b%F{reset})%(1j. %j %F{yellow}%BΓÜÖ%b%F{reset}.)'
+            #RPROMPT=$'%(?.. %? %F{red}%BΓ£ù%b%F{reset})%(1j. %j %F{yellow}%BΓÜÖ%b%F{reset}.)'
             ;;
         oneline)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ [ε┤¢]}%(#.#.$) '
             RPROMPT=
             ;;
         backtrack)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}%(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}${PIPENV_ACTIVE:+ [ε┤¢]}%(#.#.$) '
             RPROMPT=
             ;;
     esac
@@ -146,52 +140,6 @@ if [ "$color_prompt" = yes ]; then
 
     configure_prompt
 
-    # enable syntax-highlighting
-#     if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-#         . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#         ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
-#         ZSH_HIGHLIGHT_STYLES[default]=none
-#         ZSH_HIGHLIGHT_STYLES[unknown-token]=underline
-#         ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=cyan,bold
-#         ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
-#         ZSH_HIGHLIGHT_STYLES[global-alias]=fg=green,bold
-#         ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,underline
-#         ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold
-#         ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=green,underline
-#         ZSH_HIGHLIGHT_STYLES[path]=bold
-#         ZSH_HIGHLIGHT_STYLES[path_pathseparator]=
-#         ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=
-#         ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
-#         ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue,bold
-#         ZSH_HIGHLIGHT_STYLES[command-substitution]=none
-#         ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=fg=magenta,bold
-#         ZSH_HIGHLIGHT_STYLES[process-substitution]=none
-#         ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]=fg=magenta,bold
-#         ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=green
-#         ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=green
-#         ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
-#         ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]=fg=blue,bold
-#         ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
-#         ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
-#         ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]=fg=yellow
-#         ZSH_HIGHLIGHT_STYLES[rc-quote]=fg=magenta
-#         ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=magenta,bold
-#         ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=magenta,bold
-#         ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]=fg=magenta,bold
-#         ZSH_HIGHLIGHT_STYLES[assign]=none
-#         ZSH_HIGHLIGHT_STYLES[redirection]=fg=blue,bold
-#         ZSH_HIGHLIGHT_STYLES[comment]=fg=black,bold
-#         ZSH_HIGHLIGHT_STYLES[named-fd]=none
-#         ZSH_HIGHLIGHT_STYLES[numeric-fd]=none
-#         ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan
-#         ZSH_HIGHLIGHT_STYLES[bracket-error]=fg=red,bold
-#         ZSH_HIGHLIGHT_STYLES[bracket-level-1]=fg=blue,bold
-#         ZSH_HIGHLIGHT_STYLES[bracket-level-2]=fg=green,bold
-#         ZSH_HIGHLIGHT_STYLES[bracket-level-3]=fg=magenta,bold
-#         ZSH_HIGHLIGHT_STYLES[bracket-level-4]=fg=yellow,bold
-#         ZSH_HIGHLIGHT_STYLES[bracket-level-5]=fg=cyan,bold
-#         ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
-#     fi
 else
     PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%(#.#.$) '
 fi
@@ -264,9 +212,7 @@ fi
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-
-# Custom aliases
-alias win='cd /mnt/c/Users/treyb'
+alias cme='crackmapexec'
 
 # Color settings for terminal menus (like kali-tweaks)
 export NEWT_COLORS='
@@ -310,7 +256,74 @@ if [ -f /etc/zsh_command_not_found ]; then
 fi
 
 
+# ==================================
+# END OF DEFAULT KALI CONFIGURATIONS
+# ==================================
 
-# Export PATH for go
+
+# CUSTOM ALIASES
+alias win='cd /mnt/c/Users/treyb'
+alias vim="/opt/nvim-linux64/bin/nvim"
+alias vi="/usr/bin/vim"
+alias firefox="firefox >/dev/null 2>&1 &"
+alias burpsuite="burpsuite &"
+
+# CUSTOM ZSH CONFIGURATIONS
+
+## Disable syntax highlighting
+ZSH_HIGHLIGHT_MAXLENGTH=0
+
+## Disable less of potential completions if filename contains backtick
+zstyle ':completion:*:*:-command-:*' ignored-patterns '*'
+
+
+# PATHS
+## Neovim
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
+## Go
 export PATH=$PATH:/usr/local/go/bin
+
+
+# KALI-WIN-KEX CONFIGURATION
+
+## Display configuration
+export DISPLAY=:0
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+
+export NO_AT_BRIDGE=1
+export PULSE_SERVER=tcp:127.0.0.1
+export GDK_SCALE=1
+
+export XDG_RUNTIME_DIR=/run/user/1000
+
+## Run if kex server breaks
+kex-fix() {
+    echo "≡ƒ¢æ Stopping any running KEX sessions..."
+    kex stop
+    echo "≡ƒöº Running KEX environment fixes..."
+    bash ~/.kex-setup.sh
+    echo "Γ£à Environment setup complete"
+    echo "≡ƒÜÇ Starting KEX..."
+    kex --win -s
+}
+
+
+# TMUX AUTO-SAVE AND RESTORE 
+
+## Save all tmux sessions manually
+## (this happens autmomatically every 15 mins)
+alias 'tmux-save'="tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/save.sh"
+
+## Start tmux server and restore sessions if not running
+if ! tmux has-session 2>/dev/null; then
+    touch /tmp/tmux_startup_restore
+
+    tmux new-session -d
+    sleep 1
+
+    tmux has-session -t 0 2>/dev/null && tmux kill-session -t 0
+
+    rm /tmp/tmux_startup_restore
+fi
 

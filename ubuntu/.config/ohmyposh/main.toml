@@ -18,7 +18,8 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    template = '{{ .Path }}'
+    template = '{{ .Path }}{{ if .Env.PIPENV_ACTIVE }} []{{ end }}'
+    prefix = "   "
     foreground = 'blue'
     background = 'transparent'
     type = 'path'
