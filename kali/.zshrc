@@ -9,8 +9,8 @@ function set_prompt() {
     fi
 }
 
-autoload -U add-zsh-hook
-add-zsh-hook precmd set_prompt
+# autoload -U add-zsh-hook
+# add-zsh-hook precmd set_prompt
 
 
 # ====================================
