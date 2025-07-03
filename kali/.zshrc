@@ -4,7 +4,8 @@ function set_prompt() {
         prompt_symbol="@wsl"
         PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F '
     else
-        PROMPT='${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ []}%(#.%F{blue}$)%f '
+        prompt_symbol=""
+        PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F '
     fi
 }
 
