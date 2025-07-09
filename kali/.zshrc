@@ -1,22 +1,41 @@
-# Change prompt to (trey@wsl) when in WSL:
 function set_prompt() {
-    if [ -n "$WSL_DISTRO_NAME" ]; then
-        prompt_symbol="@wsl"
-        PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F '
-    else
-        prompt_symbol=""
-        PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%F{reset}%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F '
-    fi
+  prompt_symbol=""
+  PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%f%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%f '
 }
 
 autoload -U add-zsh-hook
 add-zsh-hook precmd set_prompt
 
+# ALIASES
+alias nvim='/opt/nvim-linux-x86_64/bin/nvim'
+alias vim="/opt/nvim-linux-x86_64/bin/nvim"
+alias vi="/usr/bin/vim"
+
+# Disable syntax highlighting
+ZSH_HIGHLIGHT_MAXLENGTH=0
+
+# Disable less of potential completions if filename contains backtick
+zstyle ':completion:*:*:-command-:*' ignored-patterns '*'
+
+# TMUX AUTO-SAVE AND RESTORE
+## Save all tmux sessions manually (automatically saves every 15 mins)
+alias 'tmux-save'="tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/save.sh"
+
+## Start tmux server and restore sessions if not running
+if ! tmux has-session 2>/dev/null; then
+    touch /tmp/tmux_startup_restore
+
+    tmux new-session -d
+    sleep 1
+
+    tmux has-session -t 0 2>/dev/null && tmux kill-session -t 0
+
+    rm /tmp/tmux_startup_restore
+fi
 
 # ====================================
 # START OF DEFAULT KALI CONFIGURATIONS
 # ====================================
-
 
 setopt autocd              # change directory just by typing its name
 setopt interactivecomments # allow comments in interactive mode
@@ -35,7 +54,6 @@ PROMPT_EOL_MARK=""
 bindkey -e                                        # emacs key bindings
 bindkey ' ' magic-space                           # do history expansion on space
 bindkey '^U' backward-kill-line                   # ctrl + U
-bindkey '^[[3;5~' kill-word                       # ctrl + Supr
 bindkey '^[[3~' delete-char                       # delete
 bindkey '^[[1;5C' forward-word                    # ctrl + ->
 bindkey '^[[1;5D' backward-word                   # ctrl + <-
@@ -77,9 +95,6 @@ alias history="history 0"
 # configure `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
@@ -105,58 +120,6 @@ if [ -n "$force_color_prompt" ]; then
         color_prompt=
     fi
 fi
-
-# configure_prompt() {
-#     prompt_symbol=🐧
-#     # Skull emoji for root terminal
-#     #[ "$EUID" -eq 0 ] && prompt_symbol=💀
-#     case "$PROMPT_ALTERNATIVE" in
-#         twoline)
-#             PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}${PIPENV_ACTIVE:+(pipenv)─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-#             # Right-side prompt with exit codes and background processes
-#             #RPROMPT=$'%(?.. %? %F{red}%B✗%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
-#             ;;
-#         oneline)
-#             PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}${PIPENV_ACTIVE:+ []}%(#.#.$) '
-#             RPROMPT=
-#             ;;
-#         backtrack)
-#             PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}${PIPENV_ACTIVE:+(pipenv)}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}${PIPENV_ACTIVE:+ []}%(#.#.$) '
-#             RPROMPT=
-#             ;;
-#     esac
-#     unset prompt_symbol
-# }
-
-# The following block is surrounded by two delimiters.
-# These delimiters must not be modified. Thanks.
-# START KALI CONFIG VARIABLES
-PROMPT_ALTERNATIVE=twoline
-NEWLINE_BEFORE_PROMPT=yes
-# STOP KALI CONFIG VARIABLES
-
-# if [ "$color_prompt" = yes ]; then
-#     # override default virtualenv indicator in prompt
-#     VIRTUAL_ENV_DISABLE_PROMPT=1
-
-#     configure_prompt
-
-# else
-#     PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%(#.#.$) '
-# fi
-# unset color_prompt force_color_prompt
-
-# toggle_oneline_prompt(){
-#     if [ "$PROMPT_ALTERNATIVE" = oneline ]; then
-#         PROMPT_ALTERNATIVE=twoline
-#     else
-#         PROMPT_ALTERNATIVE=oneline
-#     fi
-#     configure_prompt
-#     zle reset-prompt
-# }
-# zle -N toggle_oneline_prompt
-# bindkey ^P toggle_oneline_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -215,35 +178,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias cme='crackmapexec'
 
-# Color settings for terminal menus (like kali-tweaks)
-export NEWT_COLORS='
-    root=,blue
-    window=,blue
-    border=white,blue
-    title=white,blue
-    textbox=white,blue
-    button=white,blue
-    actbutton=white,green
-    checkbox=white,blue
-    actcheckbox=white,green
-    entry=white,blue
-    label=black,blue
-    listbox=white,blue
-    actlistbox=white,red
-    sellistbox=white,red
-    actsellistbox=white,red
-    helpline=white,blue
-    roottext=white,blue
-    emptyscale=white,blue
-    fullscale=white,blue
-    disentry=white,blue
-    compactbutton=white,blue
-    actcompactbutton=white,red
-    shadow=,blue
-    compact=white,blue
-    actselcompact=white,red
-'
-
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -255,76 +189,3 @@ fi
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
-
-
-# ==================================
-# END OF DEFAULT KALI CONFIGURATIONS
-# ==================================
-
-
-# CUSTOM ALIASES
-alias win='cd /mnt/c/Users/treyb'
-alias vim="/opt/nvim-linux64/bin/nvim"
-alias vi="/usr/bin/vim"
-alias firefox="firefox >/dev/null 2>&1 &"
-alias burpsuite="burpsuite &"
-
-# CUSTOM ZSH CONFIGURATIONS
-
-## Disable syntax highlighting
-ZSH_HIGHLIGHT_MAXLENGTH=0
-
-## Disable less of potential completions if filename contains backtick
-zstyle ':completion:*:*:-command-:*' ignored-patterns '*'
-
-
-# PATHS
-## Neovim
-export PATH="$PATH:/opt/nvim-linux64/bin"
-
-## Go
-export PATH=$PATH:/usr/local/go/bin
-
-
-# KALI-WIN-KEX CONFIGURATION
-
-## Display configuration
-export DISPLAY=:0
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
-
-export NO_AT_BRIDGE=1
-export PULSE_SERVER=tcp:127.0.0.1
-export GDK_SCALE=1
-
-export XDG_RUNTIME_DIR=/run/user/1000
-
-## Run if kex server breaks
-kex-fix() {
-    echo "🛑 Stopping any running KEX sessions..."
-    kex stop
-    echo "🔧 Running KEX environment fixes..."
-    bash ~/.kex-setup.sh
-    echo "✅ Environment setup complete"
-    echo "🚀 Starting KEX..."
-    kex --win -s
-}
-
-
-# TMUX AUTO-SAVE AND RESTORE 
-
-## Save all tmux sessions manually
-## (this happens autmomatically every 15 mins)
-alias 'tmux-save'="tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/save.sh"
-
-## Start tmux server and restore sessions if not running
-if ! tmux has-session 2>/dev/null; then
-    touch /tmp/tmux_startup_restore
-
-    tmux new-session -d
-    sleep 1
-
-    tmux has-session -t 0 2>/dev/null && tmux kill-session -t 0
-
-    rm /tmp/tmux_startup_restore
-fi
-
