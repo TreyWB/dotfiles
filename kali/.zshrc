@@ -1,6 +1,6 @@
 function set_prompt() {
   prompt_symbol=""
-  PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%f%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%f '
+  PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n'"$prompt_symbol"$'%b%F{%(#.blue.green)})-%F{%(#.blue.green)}[%B%f%~%b%F{%(#.blue.green)}]${PIPENV_ACTIVE:+ []}%f\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%f '
 }
 
 autoload -U add-zsh-hook
