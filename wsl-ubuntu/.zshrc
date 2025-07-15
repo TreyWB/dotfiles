@@ -32,20 +32,20 @@ alias gimp="/opt/GIMP-3.0.4-x86_64.AppImage"
 # PATHS
 
 ## Oh-My-Posh
-export PATH=$PATH:~/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 
 ## Go
 export PATH=$PATH:/usr/local/go/bin
 
 ## fnm
-FNM_PATH="~/.local/share/fnm"
+FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="~/.local/share/fnm:$PATH"
+  export PATH="$HOME/.local/share/fnm:$PATH"
   eval "`fnm env`"
 fi
 
 ## Add bin 
-export PATH=~/bin:$PATH
+export PATH=$HOME/bin:$PATH
 
 
 # TMUX AUTO-SAVE AND RESTORE
