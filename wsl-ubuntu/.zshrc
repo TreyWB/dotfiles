@@ -24,8 +24,8 @@ PROMPT_EOL_MARK=""
 
 # ALIASES
 alias win="cd /mnt/c/Users/treyb"
-alias nvim="/opt/nvim-linux64/bin/nvim"
-alias vim="/opt/nvim-linux64/bin/nvim"
+alias nvim="/opt/nvim-linux-x86_64/bin/nvim"
+alias vim="/opt/nvim-linux-x86_64/bin/nvim"
 alias vi="/usr/bin/vim"
 alias gimp="/opt/GIMP-3.0.4-x86_64.AppImage"
 
