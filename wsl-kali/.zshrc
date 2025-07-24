@@ -8,8 +8,6 @@ add-zsh-hook precmd set_prompt
 
 # ALIASES
 alias win='cd /mnt/c/Users/treyb'
-alias firefox="firefox >/dev/null 2>&1 &"
-alias burpsuite="burpsuite &"
 alias nvim='/opt/nvim-linux-x86_64/bin/nvim'
 alias vim="/opt/nvim-linux-x86_64/bin/nvim"
 alias vi="/usr/bin/vim"
